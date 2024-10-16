@@ -1,0 +1,93 @@
+:root {
+  /* Color palette */
+
+  /* Foreground (Text) Colors */
+  --color-text-primary: #333333;
+  --color-text-secondary: #666666;
+  --color-text-tertiary: #999999;
+  --color-text-on-primary: #ffffff;
+  --color-text-on-secondary: #333333;
+  --color-text-on-tertiary: #ffffff;
+
+  /* Background Colors */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f7f7f7;
+  --color-bg-tertiary: #eeeeee;
+  --color-bg-primary-accent: #5ec576;
+  --color-bg-secondary-accent: #ffcb03;
+  --color-bg-tertiary-accent: #ff585f;
+
+  /* Border Colors */
+  --color-border-primary: #cccccc;
+  --color-border-secondary: #b3b3b3;
+  --color-border-tertiary: #e0e0e0;
+  --color-border-on-primary: #4bbb7d;
+  --color-border-on-secondary: #ffbb00;
+  --color-border-on-tertiary: #fd424b;
+
+  /* Primary, Secondary, Tertiary Colors */
+  --color-primary: #5ec576;
+  --color-secondary: #ffcb03;
+  --color-tertiary: #ff585f;
+
+  --color-primary-dark: #4bbb7d;
+  --color-secondary-dark: #ffbb00;
+  --color-tertiary-dark: #fd424b;
+
+  --color-primary-light: #80d490;
+  --color-secondary-light: #ffdc33;
+  --color-tertiary-light: #ff7b83;
+
+  --color-primary-muted: #5ec5763a;
+  --color-secondary-muted: #ffcb0331;
+  --color-tertiary-muted: #ff58602d;
+
+  --color-primary-accent: #2e944c;
+  --color-secondary-accent: #fca503;
+  --color-tertiary-accent: #d93841;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(to top left, #39b385, #9be15d);
+  --gradient-secondary: linear-gradient(to top left, #ffb003, #ffcb03);
+  --gradient-tertiary: linear-gradient(to top right, #ff5a70, #ff8a94);
+
+  /* Spacing */
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+  --spacing-4xl: 96px;
+
+  /* Font Size */
+  --font-sm: 12px;
+  --font-md: 16px;
+  --font-lg: 24px;
+  --font-xl: 32px;
+  --font-2xl: 48px;
+  --font-3xl: 64px;
+
+  /* Break point */
+  --break-point-sm: 640px;
+  --break-point-md: 768px;
+  --break-point-lg: 1024px;
+
+  /* Font Weight */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-strong: 700;
+}
+
+html {
+  font-size: var(--font-md);
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  background-color: var(--color-bg-primary);
+}

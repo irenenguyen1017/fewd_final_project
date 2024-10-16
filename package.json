@@ -1,0 +1,15 @@
+{
+  "name": "bankist-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start" : "live-server ./src" 
+  },
+  "keywords": [],
+  "author": "Binh Nguyen",
+  "license": "ISC",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
