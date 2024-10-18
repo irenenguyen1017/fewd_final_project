@@ -177,7 +177,7 @@ html, body {
 
 @media (min-width: 1024px) {
   .main{
-    padding-top: var(--spacing-lg);
+    padding-top: var(--spacing-4xl);
   }
 }
 
