@@ -73,6 +73,12 @@
   --break-point-md: 768px;
   --break-point-lg: 1024px;
 
+  /* Size */
+  --size-sm: 640px;
+  --size-md: 768px;
+  --size-lg: 1024px;
+  --size-xl: 1280px;
+
   /* Font Weight */
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -91,3 +97,66 @@ body {
   line-height: 1.5;
   background-color: var(--color-bg-primary);
 }
+
+html, body {
+  min-height: 100vh;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.page-block {
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+  max-width: 100%;
+}
+
+@media (min-width: var(--break-point-md)) {
+  .page-block {
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+  }
+}
+
+.content-block {
+  width: 100%;
+  max-width: var(--size-xl);
+  margin: 0 auto;
+}
+
+.content-block__sm {
+  max-width: var(--size-sm);
+}
+
+.content-block__md {
+  max-width: var(--size-md);
+}
+
+.content-block__lg {
+  max-width: var(--size-lg);
+}
+
+.header {
+  position: relative;
+  width: 100%;
+  flex-grow: 0;
+}
+
+.header__wrapper {
+  height: 70px;
+}
+
+.main {
+  flex-grow: 1;
+}
+
+.footer {
+  height: 200px;
+  flex-grow: 0;
+  padding-top: var(--spacing-xl);
+}
+
