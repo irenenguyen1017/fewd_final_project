@@ -119,17 +119,16 @@
                 <!-- OPERATION: TRANSFERS -->
                 <div class="operation operation--transfer">
                   <h2>Transfer money</h2>
-                  <form class="form form--transfer">
-                    <input type="text" class="form__input form__input--to" />
-                    <input
-                      type="number"
-                      class="form__input form__input--amount"
-                    />
-                    <button class="form__btn form__btn--transfer">
-                      &rarr;
-                    </button>
-                    <label class="form__label">Transfer to</label>
-                    <label class="form__label">Amount</label>
+                  <form class="form" id="transfer-form">
+                    <div class="field">
+                      <label class="field__label">Transfer to</label>
+                      <input type="text" class="input operation__input" />
+                    </div>
+                    <div class="field">
+                      <label class="field__label">Amount</label>
+                      <input type="number" class="input operation__input" />
+                    </div>
+                    <button class="btn btn-outline">Process</button>
                   </form>
                 </div>
 
@@ -137,12 +136,11 @@
                 <div class="operation operation--loan">
                   <h2>Request loan</h2>
                   <form class="form form--loan">
-                    <input
-                      type="number"
-                      class="form__input form__input--loan-amount"
-                    />
-                    <button class="form__btn form__btn--loan">&rarr;</button>
-                    <label class="form__label form__label--loan">Amount</label>
+                    <div class="field">
+                      <label class="field__label">Amount</label>
+                      <input type="number" class="input operation__input" />
+                    </div>
+                    <button class="btn btn-outline">Request</button>
                   </form>
                 </div>
 
@@ -150,15 +148,21 @@
                 <div class="operation operation--close">
                   <h2>Close account</h2>
                   <form class="form form--close">
-                    <input type="text" class="form__input form__input--user" />
-                    <input
-                      type="password"
-                      maxlength="6"
-                      class="form__input form__input--pin"
-                    />
-                    <button class="form__btn form__btn--close">&rarr;</button>
-                    <label class="form__label">Confirm user name</label>
-                    <label class="form__label">Confirm Password</label>
+                    <div class="field">
+                      <label class="field__label">Confirm user name</label>
+                      <input type="text" class="input operation__input" />
+                    </div>
+                    <div class="field">
+                      <label class="field__label">Confirm Password</label>
+                      <input
+                        type="password"
+                        maxlength="6"
+                        class="input operation__input"
+                      />
+                    </div>
+                    <button class="btn btn-outline operation__btn">
+                      Delete Account
+                    </button>
                   </form>
                 </div>
               </div>
