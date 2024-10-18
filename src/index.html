@@ -38,14 +38,20 @@
             id="sign-in-content"
           >
             <form class="form" id="sign-in-form">
-              <input type="text" placeholder="User name" class="input" />
+              <input
+                type="text"
+                placeholder="User name"
+                class="input"
+                id="sign-in-user-input"
+              />
               <input
                 type="password"
                 placeholder="Enter your pin number"
                 maxlength="4"
                 class="input"
+                id="sign-in-password-input"
               />
-              <button class="btn">Log in</button>
+              <button type="submit" type="submit" class="btn">Log in</button>
             </form>
           </div>
 
@@ -54,14 +60,20 @@
             id="register-content"
           >
             <form class="form" id="register-form">
-              <input type="text" placeholder="user name" class="input" />
+              <input
+                type="text"
+                placeholder="user name"
+                class="input"
+                id="register-user-input"
+              />
               <input
                 type="password"
                 placeholder="password"
                 maxlength="4"
                 class="input"
+                id="register-password-input"
               />
-              <button class="btn">Register</button>
+              <button type="submit" class="btn">Register</button>
             </form>
           </div>
 
@@ -71,14 +83,14 @@
                 <div>
                   <p class="balance__label">Current balance</p>
                   <p class="balance__date">
-                    As of <span class="date">10/10/2024</span>
+                    As of <span class="date" id="current-date">10/10/2024</span>
                   </p>
                 </div>
-                <p class="balance__value">$0000</p>
+                <p class="balance__value" id="curent-balance">$0000</p>
               </div>
 
               <div class="transactions-history">
-                <div class="transactions">
+                <div class="transactions" id="transactions">
                   <div class="transactions__row">
                     <div class="transactions__type transactions__type--deposit">
                       2 deposit
@@ -102,15 +114,30 @@
                 <div class="summary">
                   <div class="summary__item">
                     <p class="summary__label">In</p>
-                    <p class="summary__value summary__value--in">$0000</p>
+                    <p
+                      class="summary__value summary__value--in"
+                      id="summary-value-in"
+                    >
+                      $0000
+                    </p>
                   </div>
                   <div class="summary__item">
                     <p class="summary__label">Out</p>
-                    <p class="summary__value summary__value--out">$0000</p>
+                    <p
+                      class="summary__value summary__value--out"
+                      id="summary-value-out"
+                    >
+                      $0000
+                    </p>
                   </div>
                   <div class="summary__item">
                     <p class="summary__label">Interest</p>
-                    <p class="summary__value summary__value--interest">$0000</p>
+                    <p
+                      class="summary__value summary__value--interest"
+                      id="summary-value-interest"
+                    >
+                      $0000
+                    </p>
                   </div>
                 </div>
               </div>
@@ -122,35 +149,55 @@
                   <form class="form" id="transfer-form">
                     <div class="field">
                       <label class="field__label">Transfer to</label>
-                      <input type="text" class="input operation__input" />
+                      <input
+                        type="text"
+                        id="transfer-user-input"
+                        class="input operation__input"
+                      />
                     </div>
                     <div class="field">
                       <label class="field__label">Amount</label>
-                      <input type="number" class="input operation__input" />
+                      <input
+                        type="number"
+                        class="input operation__input"
+                        id="transfer-amount-input"
+                      />
                     </div>
-                    <button class="btn btn-outline">Process</button>
+                    <button type="submit" class="btn btn-outline">
+                      Process
+                    </button>
                   </form>
                 </div>
 
                 <!-- OPERATION: LOAN -->
                 <div class="operation operation--loan">
                   <h2>Request loan</h2>
-                  <form class="form form--loan">
+                  <form class="form" id="loan-form">
                     <div class="field">
                       <label class="field__label">Amount</label>
-                      <input type="number" class="input operation__input" />
+                      <input
+                        type="number"
+                        class="input operation__input"
+                        id="loan-amount-input"
+                      />
                     </div>
-                    <button class="btn btn-outline">Request</button>
+                    <button type="submit" class="btn btn-outline">
+                      Request
+                    </button>
                   </form>
                 </div>
 
                 <!-- OPERATION: CLOSE -->
                 <div class="operation operation--close">
                   <h2>Close account</h2>
-                  <form class="form form--close">
+                  <form class="form" id="delete-form">
                     <div class="field">
                       <label class="field__label">Confirm user name</label>
-                      <input type="text" class="input operation__input" />
+                      <input
+                        type="text"
+                        class="input operation__input"
+                        id="delete-account-input"
+                      />
                     </div>
                     <div class="field">
                       <label class="field__label">Confirm Password</label>
@@ -158,19 +205,18 @@
                         type="password"
                         maxlength="6"
                         class="input operation__input"
+                        id="delete-account-password-input"
                       />
                     </div>
-                    <button class="btn btn-outline operation__btn">
+                    <button
+                      type="submit"
+                      class="btn btn-outline operation__btn"
+                    >
                       Delete Account
                     </button>
                   </form>
                 </div>
               </div>
-
-              <!-- LOGOUT TIMER -->
-              <p class="logout-timer">
-                You will be logged out in <span class="timer">05:00</span>
-              </p>
             </div>
           </div>
         </div>
