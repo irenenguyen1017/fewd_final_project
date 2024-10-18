@@ -64,6 +64,7 @@
               <button class="btn">Register</button>
             </form>
           </div>
+
           <div class="content-block" id="dashboard-content">
             <div class="dashboard">
               <div class="balance">
@@ -76,77 +77,90 @@
                 <p class="balance__value">$0000</p>
               </div>
 
-              <!-- MOVEMENTS -->
-              <div class="movements">
-                <div class="movements__row">
-                  <div class="movements__type movements__type--deposit">
-                    2 deposit
+              <div class="transactions-history">
+                <div class="transactions">
+                  <div class="transactions__row">
+                    <div class="transactions__type transactions__type--deposit">
+                      2 deposit
+                    </div>
+                    <div class="transactions__date">8 days ago</div>
+                    <div class="transactions__value">$4 000</div>
                   </div>
-                  <div class="movements__date">8 days ago</div>
-                  <div class="movements__value">$4 000</div>
-                </div>
-                <div class="movements__row">
-                  <div class="movements__type movements__type--withdrawal">
-                    1 withdrawal
+
+                  <div class="transactions__row">
+                    <div
+                      class="transactions__type transactions__type--withdrawal"
+                    >
+                      1 withdrawal
+                    </div>
+                    <div class="transactions__date">17/10/2024</div>
+                    <div class="transactions__value">-$378</div>
                   </div>
-                  <div class="movements__date">17/10/2024</div>
-                  <div class="movements__value">-$378</div>
+                </div>
+
+                <!-- SUMMARY -->
+                <div class="summary">
+                  <div class="summary__item">
+                    <p class="summary__label">In</p>
+                    <p class="summary__value summary__value--in">$0000</p>
+                  </div>
+                  <div class="summary__item">
+                    <p class="summary__label">Out</p>
+                    <p class="summary__value summary__value--out">$0000</p>
+                  </div>
+                  <div class="summary__item">
+                    <p class="summary__label">Interest</p>
+                    <p class="summary__value summary__value--interest">$0000</p>
+                  </div>
                 </div>
               </div>
 
-              <!-- SUMMARY -->
-              <div class="summary">
-                <p class="summary__label">In</p>
-                <p class="summary__value summary__value--in">$0000</p>
-                <p class="summary__label">Out</p>
-                <p class="summary__value summary__value--out">$0000</p>
-                <p class="summary__label">Interest</p>
-                <p class="summary__value summary__value--interest">$0000</p>
-                <button class="btn--sort">&downarrow; SORT</button>
-              </div>
+              <div class="operation-container">
+                <!-- OPERATION: TRANSFERS -->
+                <div class="operation operation--transfer">
+                  <h2>Transfer money</h2>
+                  <form class="form form--transfer">
+                    <input type="text" class="form__input form__input--to" />
+                    <input
+                      type="number"
+                      class="form__input form__input--amount"
+                    />
+                    <button class="form__btn form__btn--transfer">
+                      &rarr;
+                    </button>
+                    <label class="form__label">Transfer to</label>
+                    <label class="form__label">Amount</label>
+                  </form>
+                </div>
 
-              <!-- OPERATION: TRANSFERS -->
-              <div class="operation operation--transfer">
-                <h2>Transfer money</h2>
-                <form class="form form--transfer">
-                  <input type="text" class="form__input form__input--to" />
-                  <input
-                    type="number"
-                    class="form__input form__input--amount"
-                  />
-                  <button class="form__btn form__btn--transfer">&rarr;</button>
-                  <label class="form__label">Transfer to</label>
-                  <label class="form__label">Amount</label>
-                </form>
-              </div>
+                <!-- OPERATION: LOAN -->
+                <div class="operation operation--loan">
+                  <h2>Request loan</h2>
+                  <form class="form form--loan">
+                    <input
+                      type="number"
+                      class="form__input form__input--loan-amount"
+                    />
+                    <button class="form__btn form__btn--loan">&rarr;</button>
+                    <label class="form__label form__label--loan">Amount</label>
+                  </form>
+                </div>
 
-              <!-- OPERATION: LOAN -->
-              <div class="operation operation--loan">
-                <h2>Request loan</h2>
-                <form class="form form--loan">
-                  <input
-                    type="number"
-                    class="form__input form__input--loan-amount"
-                  />
-                  <button class="form__btn form__btn--loan">&rarr;</button>
-                  <label class="form__label form__label--loan">Amount</label>
-                </form>
-              </div>
-
-              <!-- OPERATION: CLOSE -->
-              <div class="operation operation--close">
-                <h2>Close account</h2>
-                <form class="form form--close">
-                  <input type="text" class="form__input form__input--user" />
-                  <input
-                    type="password"
-                    maxlength="6"
-                    class="form__input form__input--pin"
-                  />
-                  <button class="form__btn form__btn--close">&rarr;</button>
-                  <label class="form__label">Confirm user name</label>
-                  <label class="form__label">Confirm Password</label>
-                </form>
+                <!-- OPERATION: CLOSE -->
+                <div class="operation operation--close">
+                  <h2>Close account</h2>
+                  <form class="form form--close">
+                    <input type="text" class="form__input form__input--user" />
+                    <input
+                      type="password"
+                      maxlength="6"
+                      class="form__input form__input--pin"
+                    />
+                    <button class="form__btn form__btn--close">&rarr;</button>
+                    <label class="form__label">Confirm user name</label>
+                    <label class="form__label">Confirm Password</label>
+                  </form>
+                </div>
               </div>
 
               <!-- LOGOUT TIMER -->
