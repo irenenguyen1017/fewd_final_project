@@ -23,12 +23,50 @@
     <div class="page-container">
       <header class="header">
         <div class="page-block">
-          <div class="content-block header__wrapper"></div>
+          <div class="content-block header__wrapper">
+            <img src="../images/logo.png" alt="logo" class="logo" />
+          </div>
         </div>
       </header>
       <main class="main">
         <div class="page-block">
-          <div class="content-block"></div>
+          <div class="content-block loader-container hidden" id="loader">
+            <div class="loader"></div>
+          </div>
+          <div
+            class="content-block content-block__sm hidden"
+            id="sign-in-content"
+          >
+            <form class="form" id="sign-in-form">
+              <input type="text" placeholder="user name" class="input" />
+              <input
+                type="password"
+                placeholder="password"
+                maxlength="4"
+                class="input"
+              />
+              <button class="btn">Log in</button>
+            </form>
+          </div>
+
+          <div
+            class="content-block content-block__sm hidden"
+            id="register-content"
+          >
+            <form class="form" id="register-form">
+              <input type="text" placeholder="user name" class="input" />
+              <input
+                type="password"
+                placeholder="password"
+                maxlength="4"
+                class="input"
+              />
+              <button class="btn">Register</button>
+            </form>
+          </div>
+          <div class="content-block" id="dashboard-content">
+            <div class="dashboard"></div>
+          </div>
         </div>
       </main>
       <footer class="footer">
