@@ -1,3 +1,32 @@
+// Define the localStorage manager
+class StorageManager {
+  // Add a new item (key-value pair) to localStorage
+  add(key, value) {
+    const existing = this.get(key);
+    if (!existing) {
+      localStorage.setItem(key, JSON.stringify(value));
+    } else {
+      console.warn(`The "${key}" already exists.`);
+    }
+  }
+
+  // Set or update an item in localStorage
+  set(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  // Remove an item from localStorage
+  remove(key) {
+    localStorage.removeItem(key);
+  }
+
+  // Get an item from localStorage
+  get(key) {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : null;
+  }
+}
+
 function main() {
   // Loader element
   const loader = document.getElementById('loader');

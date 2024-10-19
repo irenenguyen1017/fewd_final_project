@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="" />
+    <title>Log In Page</title>
+  </head>
+  <body></body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bankist App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <div class="page-container">
+      <header class="header">
+        <div class="page-block">
+          <div class="content-block header__wrapper">
+            <img src="../images/logo.png" alt="logo" class="logo" />
+          </div>
+        </div>
+      </header>
+      <main class="main">
+        <div class="page-block">
+          <div class="content-block loader-container" id="loader">
+            <div class="loader"></div>
+          </div>
+          <div
+            class="content-block content-block__sm hidden"
+            id="sign-in-content"
+          >
+            <form class="form" id="sign-in-form">
+              <input
+                type="text"
+                placeholder="User name"
+                class="input"
+                id="sign-in-user-input"
+              />
+              <input
+                type="password"
+                placeholder="Enter your pin number"
+                maxlength="4"
+                class="input"
+                id="sign-in-password-input"
+              />
+              <button type="submit" type="submit" class="btn">Log in</button>
+            </form>
+          </div>
+        </div>
+      </main>
+      <footer class="footer">
+        <div class="page-block">
+          <div class="content-block footer__wrapper"></div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="main.js" defer></script>
+  </body>
+</html>
