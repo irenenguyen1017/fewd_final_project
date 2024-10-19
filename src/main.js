@@ -51,11 +51,14 @@ class BankAccountManager {
     this.storage = new StorageManager(); // Use StorageManager for all localStorage operations
   }
 
+  isAuthenticated() {
+    const currentUser = this.getCurrentUser();
+    return !!currentUser;
+  }
+
   register({data, onSuccess, onError}) {
     const users = this.getUsers();
     const {fullName, userName, pin} = data;
-
-    console.log({ users})
 
     const existingUser = users.find(user => user.userName === userName);
     if (existingUser) {
@@ -68,6 +71,63 @@ class BankAccountManager {
     users.push(newUser);
 
     this.setUsers(users);
+
+    this.setCurrentUser(newUser);
+
+    onSuccess();
+  }
+
+  login({data, onSuccess, onError}) {
+    const {userName, pin} = data;
+    const users = this.getUsers();
+
+    const user = users.find(user => user.userName === userName && user.pin === pin);
+
+    if (!user) {
+      onError('Invalid user name or pin');
+      return;
+    }
+
+    this.setCurrentUser(user);
+
+    onSuccess();
+  }
+
+  logout ({onSuccess, onError}) {
+    if(!this.isAuthenticated()) {
+      onError('User is not authenticated');
+      return;
+    }
+
+    this.storage.remove(this.currentUserKey);
+    onSuccess();
+  }
+
+  deleteAccount ({data, onSuccess, onError}) {
+    if(!this.isAuthenticated()) {
+      onError('User is not authenticated');
+      return;
+    };
+
+    const {userName, pin} = data;
+    const users = this.getUsers();
+    const user = users.find(user => user.userName === userName && user.pin === pin);
+
+    if(!user) {
+      onError('Invalid user name or pin');
+      return;
+    }
+
+    const updatedUsers = users.filter(user => user.userName !== userName);
+    this.setUsers(updatedUsers);
+
+    this.logout();
+
+    onSuccess();
+  }
+
+  generateInterestRate() {
+    return (Math.random() * 3).toFixed(2);
   }
 
   getUsers() {
@@ -86,9 +146,6 @@ class BankAccountManager {
     return this.storage.set(this.currentUserKey, user);
   }
 
-  generateInterestRate() {
-    return (Math.random() * 3).toFixed(2);
-  }
 }
 
 
@@ -148,20 +205,6 @@ function main() {
   }
   
 
-  bankAccountManager.register({
-    data: {
-      username: 'test',
-      fullName: 'John Smith',
-      pin: 1111
-    },
-    onError(errorMessage) {
-      console.log(errorMessage);
-    },
-    onSuccess() {
-      console.log('Account created succesfully!')
-    }
-
-  })
 }
 
 main();
