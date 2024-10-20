@@ -136,8 +136,6 @@ class BankAccountManager {
     const {userName, pin} = data;
     const users = this.getUsers();
 
-    console.log({ users, userName, pin })
-
     const user = users.find(user => user.userName === userName && user.pin === pin);
 
     if (!user) {
@@ -208,8 +206,6 @@ class BankAccountManager {
     const currentUser = this.getCurrentUser();
     const recipient = this.findUserByAccountNumber(toAccountNumber);
   
-    console.log({ currentUser, recipient, toAccountNumber });
-
     if(!recipient) {
       onError(`Recipient account ${toAccountNumber} not found`);
       return;
@@ -339,8 +335,6 @@ function main() {
 
   function initialize() {
     const isAuthenticated = bankAccountManager.isAuthenticated();
-
-    console.log({ isAuthenticated })
 
     if (isAuthenticated) {
       if (dashboardPage) {
@@ -524,8 +518,6 @@ function main() {
       toAccountNumber: Number(transferUserInput.value),
       amount: Number(transferAmountInput.value)
     };
-
-    console.log({ data });
 
     bankAccountManager.transferMoney({
       data,
