@@ -1,7 +1,7 @@
 const defaultUsers = [
   {
     fullName: "Jessica Davis",
-    userName: "testUser1",
+    userName: "test1",
     accountNumber: 123456,
     transactions: [
       { type: "deposit", amount: 5000, date: "2024-10-01T13:15:33.035Z" },
@@ -15,7 +15,7 @@ const defaultUsers = [
   },
   {
     fullName: "Michael Johnson",
-    userName: "testUser2",
+    userName: "test2",
     accountNumber: 234567,
     transactions: [
       { type: "deposit", amount: 7000, date: "2024-09-25T11:24:33.035Z" },
@@ -29,7 +29,7 @@ const defaultUsers = [
   },
   {
     fullName: "Emily Clark",
-    userName: "testUser3",
+    userName: "test3",
     accountNumber: 345678,
     transactions: [
       { type: "deposit", amount: 10000, date: "2024-10-03T13:55:33.035Z" },
@@ -665,17 +665,18 @@ function main() {
   
     // Username validation (max 12 characters, alphabet only)
     if (type === 'userName') {
-      const regex = /^[A-Za-z]+$/; // Alphabet only
+      const regex = /^[a-z0-9]+$/; // Lowercase alphabet and numbers only
       const { maxLength = 12 } = rules;
-  
+    
       if (!regex.test(value)) {
-        return setInvalid('The username should contain alphabetic characters only.');
+        return setInvalid('The username should contain lowercase alphabetic characters and numbers only.');
       }
-  
+    
       if (value.length > maxLength) {
         return setInvalid(`The username must not exceed ${maxLength} characters.`);
       }
     }
+    
   
     // PIN validation (exactly 4 digits)
     if (type === 'pin') {
