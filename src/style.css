@@ -1,47 +1,31 @@
 :root {
   /* Color palette */
 
-  /* Foreground (Text) Colors */
+  /* Text Colors */
   --color-text-primary: #333333;
   --color-text-secondary: #666666;
-  --color-text-tertiary: #999999;
   --color-text-on-primary: #ffffff;
-  --color-text-on-secondary: #333333;
-  --color-text-on-tertiary: #ffffff;
 
   /* Background Colors */
   --color-bg-primary: #ffffff;
-  --color-bg-secondary: #f7f7f7;
-  --color-bg-tertiary: #eeeeee;
   --color-bg-primary-accent: #5ec576;
   --color-bg-secondary-accent: #ffcb03;
   --color-bg-tertiary-accent: #ff585f;
-  --color-bg-neutral: #b3b3b3;
 
   /* Border Colors */
   --color-border-primary: #cccccc;
-  --color-border-secondary: #b3b3b3;
-  --color-border-tertiary: #e0e0e0;
-  --color-border-on-primary: #4bbb7d;
-  --color-border-on-secondary: #ffbb00;
-  --color-border-on-tertiary: #fd424b;
+  --color-border-secondary: #e0e0e0;
 
   /* Primary, Secondary, Tertiary Colors */
   --color-primary: #5ec576;
   --color-secondary: #ffcb03;
   --color-tertiary: #ff585f;
-
-  --color-primary-dark: #4bbb7d;
-  --color-secondary-dark: #ffbb00;
-  --color-tertiary-dark: #fd424b;
-
+  
   --color-primary-light: #94e0a2;
   --color-secondary-light: #ffdc33;
   --color-tertiary-light: #ff7b83;
-
-  --color-primary-muted: #5ec5763a;
-  --color-secondary-muted: #ffcb0331;
-  --color-tertiary-muted: #ff58602d;
+  
+  --color-primary-dark: #4bbb7d;
 
   --color-primary-accent: #2e944c;
   --color-secondary-accent: #fca503;
@@ -69,12 +53,6 @@
   --font-lg: 24px;
   --font-xl: 32px;
   --font-2xl: 48px;
-  --font-3xl: 64px;
-
-  /* Break point */
-  --break-point-sm: 640px;
-  --break-point-md: 768px;
-  --break-point-lg: 1024px;
 
   /* Size */
   --size-sm: 640px;
@@ -85,7 +63,6 @@
   /* Font Weight */
   --font-weight-regular: 400;
   --font-weight-medium: 500;
-  --font-weight-strong: 700;
 }
 
 html {
@@ -243,7 +220,7 @@ html, body {
   background-color: var(--color-primary-dark);
   border: 1px solid var(--color-primary-dark);
   border-radius: 8px;
-  color: var(--color-text-on-tertiary);
+  color: var(--color-text-on-primary);
   font-size: var(--font-md);
   font-weight: var(--font-weight-medium);
   padding: 0 var(--spacing-md);
@@ -322,7 +299,6 @@ html, body {
   }
 }
 
-
 /* transactions */
 .transactions-history {
   display: flex;
@@ -355,7 +331,7 @@ html, body {
 }
 
 .transactions__row:not(:last-child) {
-  border-bottom: 1px solid var(--color-border-tertiary);
+  border-bottom: 1px solid var(--color-border-secondary);
 }
 
 .transactions__type {
@@ -389,11 +365,11 @@ html, body {
 }
 
 .transactions__type--deposit {
-  background-color:  var(--color-primary);
+  background-color:  var(--color-bg-primary-accent);
 }
 
 .transactions__type--loan {
-  background-color: var(--color-tertiary);
+  background-color: var(--color-bg-tertiary-accent);
 }
 
 .transactions__type--withdrawal {
@@ -443,13 +419,16 @@ html, body {
   margin-right: var(--spacing-sm);
 }
 
-.summary__value--in,
-.summary__value--interest {
-  color: #66c873;
+.summary__value--in {
+  color: var(--color-primary-accent);
 }
 
 .summary__value--out {
-  color: #f5465d;
+  color: var(--color-secondary-accent);
+}
+
+.summary__value--interest {
+  color: var(--color-tertiary-accent);
 }
 
 .operation-container {
@@ -498,4 +477,3 @@ html, body {
 .operation--close {
   background-image: var(--gradient-tertiary)
 }
-
