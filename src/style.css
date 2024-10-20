@@ -227,33 +227,17 @@ html, body {
   color: var(--color-text-on-tertiary);
   font-size: var(--font-md);
   font-weight: var(--font-weight-medium);
+  padding: 0 var(--spacing-md);
+}
+
+.btn-logout {
+  margin-left: auto;
 }
 
 .btn-outline {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
   border: 2px solid var(--color-bg-primary);
-}
-
-.loader-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: var(--spacing-3xl);
-}
-
-.loader {
-  border: 8px solid var(--color-border-secondary);
-  border-top: 8px solid var(--color-primary); 
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }
 
 .hidden {

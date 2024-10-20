@@ -47,7 +47,6 @@ class BankAccountManager {
   constructor() {
     this.storageKey = 'users'; // Key to store all user and bank account data in localStorage
     this.currentUserKey = 'currentUser'; // Key for storing the logged-in user
-    this.timeoutDuration = 60 * 60 * 1000; // 1-hour session timeout duration
     this.storage = new StorageManager(); // Use StorageManager for all localStorage operations
   }
 
@@ -155,18 +154,17 @@ function main() {
   const loginPage = document.getElementById('login-page');
   const registerPage = document.getElementById('register-page');
 
-  // Loader element
-  const loader = document.getElementById('loader');
-
   // Sign in elements
-  const signInContent = document.getElementById('sign-in-content');
   const signInForm = document.getElementById('sign-in-form');
   const signInUserInput = document.getElementById('sign-in-user-input');
   const signInPasswordInput = document.getElementById('sign-in-password-input');
+  
+  // Sign out elements
+  const signOutButton = document.getElementById('sign-out-button');
 
   // Register elements
-  const registerContent = document.getElementById('register-content');
   const registerForm = document.getElementById('register-form');
+  const registerFullNameInput = document.getElementById('register-full-name-input');
   const registerUserInput = document.getElementById('register-user-input');
   const registerPasswordInput = document.getElementById('register-password-input');
   
@@ -202,9 +200,84 @@ function main() {
   const bankAccountManager = new BankAccountManager();
 
   function initialize() {
-  }
-  
+    const isAuthenticated = bankAccountManager.isAuthenticated();
 
+    if (isAuthenticated) {
+      if (!dashboardPage) {
+        window.location.href = 'index.html';
+      }
+    } else {
+      if (dashboardPage) {
+        window.location.href = 'login.html';
+      }
+    }
+  }
+
+  function registerUser(event) {
+    event.preventDefault();
+
+    const data = {
+      fullName: registerFullNameInput.value,
+      userName: registerUserInput.value,
+      pin: registerPasswordInput.value
+    };
+
+    bankAccountManager.register({
+      data,
+      onSuccess: () => {
+        window.location.href = 'index.html';
+      },
+      onError: (message) => {
+        alert(message);
+      }
+    });
+  }
+
+  function signIn(event) {
+    event.preventDefault();
+
+    const data = {
+      userName: signInUserInput.value,
+      pin: signInPasswordInput.value
+    }
+
+    bankAccountManager.login({
+      data,
+      onSuccess: () => {
+        window.location.href = 'index.html';
+      },
+      onError: (message) => {
+        alert(message);
+      }
+    })
+  }
+
+  function signOut(event) {
+    event.preventDefault();
+
+    bankAccountManager.logout({
+      onSuccess: () => {
+        window.location.href = 'login.html';
+      },
+      onError: (message) => {
+        alert(message);
+      }
+    });
+  }
+
+  initialize();
+
+  if (registerForm) {
+    registerForm.addEventListener('submit', registerUser);
+  }
+
+  if(signOutButton) {
+    signOutButton.addEventListener('click', signOut);
+  }
+
+  if(signInForm) {
+    signInForm.addEventListener('submit', signIn);
+  }
 }
 
 main();
