@@ -1,3 +1,48 @@
+const defaultUsers = [
+  {
+    fullName: "Jessica Davis",
+    userName: "testUser1",
+    accountNumber: 123456,
+    transactions: [
+      { type: "deposit", amount: 5000, date: "2024-10-01T13:15:33.035Z" },
+      { type: "withdrawal", amount: 1500, date: "2024-10-05T09:48:16.867Z" },
+      { type: "deposit", amount: 1000, date: "2024-10-07T14:11:59.604Z" },
+      { type: "loan", amount: 8000, date: "2024-10-10T17:01:17.194Z" },
+      { type: "deposit", amount: 3000, date: "2024-10-12T23:36:17.929Z" },
+    ],
+    interestRate: 1.5,
+    pin: 1111,
+  },
+  {
+    fullName: "Michael Johnson",
+    userName: "testUser2",
+    accountNumber: 234567,
+    transactions: [
+      { type: "deposit", amount: 7000, date: "2024-09-25T11:24:33.035Z" },
+      { type: "withdrawal", amount: 2000, date: "2024-09-28T14:48:16.867Z" },
+      { type: "deposit", amount: 500, date: "2024-09-30T10:11:59.604Z" },
+      { type: "loan", amount: 6000, date: "2024-10-02T09:01:17.194Z" },
+      { type: "deposit", amount: 4000, date: "2024-10-03T12:36:17.929Z" },
+    ],
+    interestRate: 2.0,
+    pin: 2222,
+  },
+  {
+    fullName: "Emily Clark",
+    userName: "testUser3",
+    accountNumber: 345678,
+    transactions: [
+      { type: "deposit", amount: 10000, date: "2024-10-03T13:55:33.035Z" },
+      { type: "withdrawal", amount: 3000, date: "2024-10-06T16:35:16.867Z" },
+      { type: "deposit", amount: 2000, date: "2024-10-09T18:20:59.604Z" },
+      { type: "loan", amount: 12000, date: "2024-10-10T21:01:17.194Z" },
+      { type: "deposit", amount: 5000, date: "2024-10-11T23:10:17.929Z" },
+    ],
+    interestRate: 1.8,
+    pin: 3333,
+  }
+];
+
 // Define the localStorage manager
 class StorageManager {
   // Add a new item (key-value pair) to localStorage
@@ -42,12 +87,22 @@ class BankAccountUser {
     return Math.floor(Math.random() * 900000 + 100000);
   }
 }
-
 class BankAccountManager {
   constructor() {
     this.storageKey = 'users'; // Key to store all user and bank account data in localStorage
     this.currentUserKey = 'currentUser'; // Key for storing the logged-in user
     this.storage = new StorageManager(); // Use StorageManager for all localStorage operations
+
+    // Feed test data to localStorage
+    this.setDefaultUsers();
+  }
+
+  setDefaultUsers() {
+    const users = this.getUsers();
+
+    if (!users || users.length === 0) {
+      this.setUsers(defaultUsers);
+    }
   }
 
   isAuthenticated() {
@@ -60,12 +115,13 @@ class BankAccountManager {
     const {fullName, userName, pin} = data;
 
     const existingUser = users.find(user => user.userName === userName);
+
     if (existingUser) {
       onError('User already registered');
       return;
     }
 
-    const newUser = new BankAccountUser({fullName, userName, pin, interestRate: this.generateInterestRate()});
+    const newUser = new BankAccountUser({fullName, userName, pin: Number(pin), interestRate: this.generateInterestRate()});
 
     users.push(newUser);
 
@@ -80,7 +136,9 @@ class BankAccountManager {
     const {userName, pin} = data;
     const users = this.getUsers();
 
-    const user = users.find(user => user.userName === userName && user.pin === pin);
+    console.log({ users, userName, pin })
+
+    const user = users.find(user => user.userName === userName && Number(user.pin) === Number(pin));
 
     if (!user) {
       onError('Invalid user name or pin');
@@ -132,6 +190,18 @@ class BankAccountManager {
     return balance;
   }
 
+  getTransactionSummary() {
+    const user = this.getCurrentUser();
+
+    const incomes = user.transactions.filter(transaction => transaction.type === 'deposit' || transaction.type === 'loan').reduce((total, transaction) => total + transaction.amount, 0);
+
+    const outcomes = user.transactions.filter(transaction => transaction.type === 'withdrawal').reduce((total, transaction) => total + transaction.amount, 0);
+
+    const interest = user.transactions.filter(transaction => transaction.type === 'loan').map(transaction => transaction.amount * user.interestRate / 100).reduce((total, amount) => total + amount, 0);
+
+    return { incomes, outcomes, interest };
+  }
+
   generateInterestRate() {
     return (Math.random() * 3).toFixed(2);
   }
@@ -145,7 +215,11 @@ class BankAccountManager {
   }
 
   getCurrentUser() {
-    return this.storage.get(this.currentUserKey);
+    const currentUser = this.storage.get(this.currentUserKey);
+
+    const users = this.getUsers();
+
+    return currentUser ? users.find(user => user.userName === currentUser.userName) : null;
   }
   
   setCurrentUser(user) {
@@ -155,7 +229,6 @@ class BankAccountManager {
   }
 
 }
-
 
 function main() {
   // Page elements
@@ -208,8 +281,12 @@ function main() {
   function initialize() {
     const isAuthenticated = bankAccountManager.isAuthenticated();
 
+    console.log({ isAuthenticated })
+
     if (isAuthenticated) {
-      if (!dashboardPage) {
+      if (dashboardPage) {
+        updateUI();
+      } else {
         window.location.href = 'index.html';
       }
     } else {
@@ -288,8 +365,50 @@ function main() {
     signOutButton.addEventListener('click', signOut);
   }
 
-  function displayBalance() {   
+  function updateUI() {
+    displayBalance();
+    displayTransactions();
+    displayTransactionsSummary();
   }
+
+  function displayBalance() {   
+    const balance = bankAccountManager.calculateBalance();
+    currentBalance.textContent = formatCurrency(balance);
+    currentDate.textContent = formatDate(new Date());
+  }
+
+  function displayTransactionsSummary() {
+    const transaction = bankAccountManager.getTransactionSummary();
+    console.log({ transaction });
+
+    summaryValueIn.textContent = formatCurrency(transaction.incomes);
+    summaryValueOut.textContent = formatCurrency(transaction.outcomes);
+    summaryValueInterest.textContent = formatCurrency(transaction.interest);
+  }
+
+  function displayTransactions() {
+    const transactionsList = bankAccountManager.getCurrentUser().transactions;
+
+    let transactionsContent = '';
+
+    transactionsList.forEach(({ date, amount, type }) => {
+      const formattedDate = formatDatePass(new Date(date));
+      const formattedAmount = formatCurrency(amount);
+
+      transactionsContent += `
+        <div class="transactions__row">
+          <div class="transactions__type transactions__type--${type}">
+            ${type}
+          </div>
+          <div class="transactions__date">${formattedDate}</div>
+          <div class="transactions__value">${formattedAmount}</div>
+        </div>
+      `;
+    })
+
+    transactions.innerHTML = transactionsContent;
+  }
+
 
   // Utils  
   function formatDate (date) {
@@ -311,10 +430,12 @@ function main() {
     return formatDate(date);
   };
 
-  
-
-  
-
+  function formatCurrency (value) {
+    return new Intl.NumberFormat('en-AU', {
+      style: 'currency',
+      currency: 'AUD',
+    }).format(value);
+  };
 }
 
 main();

@@ -373,8 +373,12 @@ html, body {
   background-color:  var(--color-primary);
 }
 
-.transactions__type--withdrawal {
+.transactions__type--loan {
   background-color: var(--color-tertiary);
+}
+
+.transactions__type--withdrawal {
+  background-color: var(--color-bg-secondary-accent);
 }
 
 .transactions__value {
