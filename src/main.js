@@ -161,24 +161,18 @@ class BankAccountManager {
   }
 
   deleteAccount ({data, onSuccess, onError}) {
-    if(!this.isAuthenticated()) {
-      onError('User is not authenticated');
-      return;
-    };
-
     const {userName, pin} = data;
+    const currentUser = this.getCurrentUser();
     const users = this.getUsers();
-    const user = users.find(user => user.userName === userName && user.pin === pin);
 
-    if(!user) {
+    if (currentUser.userName !== userName || currentUser.pin !== pin) {
       onError('Invalid user name or pin');
       return;
     }
 
     const updatedUsers = users.filter(user => user.userName !== userName);
+    
     this.setUsers(updatedUsers);
-
-    this.logout();
 
     onSuccess();
   }
@@ -186,7 +180,14 @@ class BankAccountManager {
   calculateBalance() {
     const currentUser = this.getCurrentUser();
     const transactions = currentUser.transactions;
-    const balance = transactions.reduce((total, transaction) => total + transaction.amount, 0);
+    const balance = transactions.reduce((total, transaction) => {
+      if (transaction.type === 'deposit' || transaction.type === 'loan') {
+        return total + transaction.amount;
+      } else {
+        return total - transaction.amount;
+      }
+    }, 0);
+
     return balance;
   }
 
@@ -200,6 +201,47 @@ class BankAccountManager {
     const interest = user.transactions.filter(transaction => transaction.type === 'loan').map(transaction => transaction.amount * user.interestRate / 100).reduce((total, amount) => total + amount, 0);
 
     return { incomes, outcomes, interest };
+  }
+
+  transferMoney({data, onSuccess, onError })  {
+    const { toAccountNumber, amount } = data;
+    const currentUser = this.getCurrentUser();
+    const recipient = this.findUserByAccountNumber(toAccountNumber);
+  
+    console.log({ currentUser, recipient, toAccountNumber });
+
+    if(!recipient) {
+      onError(`Recipient account ${toAccountNumber} not found`);
+      return;
+    }
+
+    if(currentUser.accountNumber === recipient.accountNumber) {
+      onError('Cannot transfer money to your own account');
+      return;
+    }
+
+    const currentUserBalance = this.calculateBalance();
+
+    if (currentUserBalance < amount) {
+      onError('You do not have enough balance to transfer');
+      return;
+    }
+
+    currentUser.transactions.push({ type: 'withdrawal', amount, date: new Date().toISOString() });
+    recipient.transactions.push({ type: 'deposit', amount, date: new Date().toISOString() });
+
+    this.updateUserData(currentUser);
+    this.updateUserData(recipient);
+    
+    onSuccess();
+  }
+
+  loan ({data, onSuccess}) {
+    const { amount } = data;
+    const currentUser = this.getCurrentUser();
+    currentUser.transactions.push({ type: 'loan', amount, date: new Date().toISOString() });
+    this.updateUserData(currentUser);
+    onSuccess();
   }
 
   generateInterestRate() {
@@ -228,6 +270,23 @@ class BankAccountManager {
     return this.storage.set(this.currentUserKey, { userName, accountNumber});
   }
 
+  updateUserData(user) {
+    const users = this.getUsers();
+    const index = users.findIndex(u => u.userName === user.userName);
+
+    if (index === -1) {
+      return;
+    }
+
+    users[index] = user;
+
+    this.setUsers(users);
+  }
+
+  findUserByAccountNumber(accountNumber) {
+    const users = this.getUsers();
+    return users.find(user => user.accountNumber === accountNumber);
+  }
 }
 
 function main() {
@@ -379,15 +438,13 @@ function main() {
 
   function displayTransactionsSummary() {
     const transaction = bankAccountManager.getTransactionSummary();
-    console.log({ transaction });
-
     summaryValueIn.textContent = formatCurrency(transaction.incomes);
     summaryValueOut.textContent = formatCurrency(transaction.outcomes);
     summaryValueInterest.textContent = formatCurrency(transaction.interest);
   }
 
   function displayTransactions() {
-    const transactionsList = bankAccountManager.getCurrentUser().transactions;
+    const transactionsList = bankAccountManager.getCurrentUser().transactions.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     let transactionsContent = '';
 
@@ -409,6 +466,86 @@ function main() {
     transactions.innerHTML = transactionsContent;
   }
 
+
+  // Transfer operation
+  function transfer(event) {
+    event.preventDefault();
+
+    const data = {
+      toAccountNumber: Number(transferUserInput.value),
+      amount: Number(transferAmountInput.value)
+    };
+
+    console.log({ data });
+
+    bankAccountManager.transferMoney({
+      data,
+      onSuccess: () => {
+        console.log('Transfer successful');
+        updateUI();
+
+        transferUserInput.value = '';
+        transferAmountInput.value = '';
+      },
+      onError: (message) => {
+        alert(message);
+      }
+    });
+  }
+
+  if(transferForm) {
+    transferForm.addEventListener('submit', transfer);
+  }
+
+  // Loan operation
+  function loan(event) {
+    event.preventDefault();
+
+    const data = {
+      amount: Number(loanAmountInput.value)
+    };
+
+    bankAccountManager.loan({
+      data,
+      onSuccess: () => {
+        updateUI();
+        loanAmountInput.value = '';
+      }
+    });
+  }
+
+  if(loanForm) {
+    loanForm.addEventListener('submit', loan);
+  }
+
+  // Delete account operation
+  function deleteAccount(event) {
+    event.preventDefault();
+    const data = {
+      userName: deleteAccountInput.value,
+      pin: Number(deleletAccountPasswordInput.value)
+    }
+
+    const shouldDelete = confirm('Are you sure you want to delete your account?');
+
+    if (!shouldDelete) {
+      return;
+    }
+
+    bankAccountManager.deleteAccount({ 
+      data,
+      onError: (message) => {
+        alert(message);
+      },
+      onSuccess: () => {
+        window.location.href = 'login.html';
+      }
+    })
+  }
+
+  if(deleteForm) {
+    deleteForm.addEventListener('submit', deleteAccount);
+  }
 
   // Utils  
   function formatDate (date) {
