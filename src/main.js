@@ -138,7 +138,7 @@ class BankAccountManager {
 
     console.log({ users, userName, pin })
 
-    const user = users.find(user => user.userName === userName && Number(user.pin) === Number(pin));
+    const user = users.find(user => user.userName === userName && user.pin === pin);
 
     if (!user) {
       onError('Invalid user name or pin');
@@ -361,9 +361,23 @@ function main() {
   function signIn(event) {
     event.preventDefault();
 
+    const validateUserName = validateInput('userName', signInUserInput.value, { maxLength: 12 });
+
+    if (!validateUserName.isValid) {
+      alert(validateUserName.message);
+      return;
+    }
+
+    const validatePin = validateInput('pin', signInPasswordInput.value);
+
+    if (!validatePin.isValid) {
+      alert(validatePin.message);
+      return;
+    }
+
     const data = {
       userName: signInUserInput.value,
-      pin: signInPasswordInput.value
+      pin: Number(signInPasswordInput.value)
     }
 
     bankAccountManager.login({
@@ -385,10 +399,31 @@ function main() {
   function registerUser(event) {
     event.preventDefault();
 
+    const validateFullName = validateInput('fullName', registerFullNameInput.value, { maxLength: 50 });
+
+    if (!validateFullName.isValid) {
+      alert(validateFullName.message);
+      return;
+    }
+
+    const validateUserName = validateInput('userName', registerUserInput.value, { maxLength: 12 });
+
+    if (!validateUserName.isValid) {
+      alert(validateUserName.message);
+      return;
+    }
+
+    const validatePin = validateInput('pin', registerPasswordInput.value);
+
+    if (!validatePin.isValid) {
+      alert(validatePin.message);
+      return;
+    }
+
     const data = {
       fullName: registerFullNameInput.value,
       userName: registerUserInput.value,
-      pin: registerPasswordInput.value
+      pin: Number(registerPasswordInput.value)
     };
 
     bankAccountManager.register({
@@ -471,6 +506,20 @@ function main() {
   function transfer(event) {
     event.preventDefault();
 
+    const validateAccountNumber = validateInput('accountNumber', transferUserInput.value);
+
+    if (!validateAccountNumber.isValid) {
+      alert(validateAccountNumber.message);
+      return;
+    }
+
+    const validateAmount = validateInput('transferAmount', transferAmountInput.value);
+
+    if (!validateAmount.isValid) {
+      alert(validateAmount.message);
+      return;
+    }
+
     const data = {
       toAccountNumber: Number(transferUserInput.value),
       amount: Number(transferAmountInput.value)
@@ -481,9 +530,7 @@ function main() {
     bankAccountManager.transferMoney({
       data,
       onSuccess: () => {
-        console.log('Transfer successful');
         updateUI();
-
         transferUserInput.value = '';
         transferAmountInput.value = '';
       },
@@ -500,6 +547,13 @@ function main() {
   // Loan operation
   function loan(event) {
     event.preventDefault();
+
+    const validateAmount = validateInput('transferAmount', loanAmountInput.value);
+
+    if (!validateAmount.isValid) {
+      alert(validateAmount.message);
+      return;
+    }
 
     const data = {
       amount: Number(loanAmountInput.value)
@@ -521,6 +575,21 @@ function main() {
   // Delete account operation
   function deleteAccount(event) {
     event.preventDefault();
+
+    const validateUserName = validateInput('userName', deleteAccountInput.value, { maxLength: 12 });
+
+    if (!validateUserName.isValid) {
+      alert(validateUserName.message);
+      return;
+    }
+
+    const validatePin = validateInput('pin', deleletAccountPasswordInput.value);
+
+    if (!validatePin.isValid) {
+      alert(validatePin.message);
+      return;
+    }
+
     const data = {
       userName: deleteAccountInput.value,
       pin: Number(deleletAccountPasswordInput.value)
@@ -572,6 +641,72 @@ function main() {
       style: 'currency',
       currency: 'AUD',
     }).format(value);
+  };
+
+  function validateInput(type, value, rules = {}) {
+    // Default response object
+    const result = {
+      isValid: true,
+      message: '',
+    };
+  
+    // Helper function to set invalid result
+    const setInvalid = (message) => {
+      result.isValid = false;
+      result.message = message;
+      return result;
+    };
+  
+    // Full name validation (alphabet only)
+    if (type === 'fullName') {
+      const { maxLength } = rules;
+      const regex = /^[A-Za-z\s]+$/; // Alphabet and space only
+  
+      if (!regex.test(value)) {
+        return setInvalid('The full name should contain alphabetic characters only.');
+      }
+  
+      if (maxLength !== undefined && value.length > maxLength) {
+        return setInvalid(`The full name should not exceed ${maxLength} characters.`);
+      }
+    }
+  
+    // Username validation (max 12 characters, alphabet only)
+    if (type === 'userName') {
+      const regex = /^[A-Za-z]+$/; // Alphabet only
+      const { maxLength = 12 } = rules;
+  
+      if (!regex.test(value)) {
+        return setInvalid('The username should contain alphabetic characters only.');
+      }
+  
+      if (value.length > maxLength) {
+        return setInvalid(`The username must not exceed ${maxLength} characters.`);
+      }
+    }
+  
+    // PIN validation (exactly 4 digits)
+    if (type === 'pin') {
+      if (!/^\d{4}$/.test(value)) {
+        return setInvalid('The PIN must be exactly 4 digits long.');
+      }
+    }
+  
+    // Account number validation (exactly 6 digits)
+    if (type === 'accountNumber') {
+      if (!/^\d{6}$/.test(value)) {
+        return setInvalid('The account number must be exactly 6 digits long.');
+      }
+    }
+  
+    // Transfer amount validation (must be a number greater than 0)
+    if (type === 'transferAmount') {
+      if (isNaN(value) || value <= 0) {
+        return setInvalid('The transfer amount must be a number greater than 0.');
+      }
+    }
+  
+    return result;
   };
 }
 

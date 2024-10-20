@@ -46,26 +46,7 @@
               </div>
 
               <div class="transactions-history">
-                <div class="transactions" id="transactions">
-                  <div class="transactions__row">
-                    <div class="transactions__type transactions__type--deposit">
-                      2 deposit
-                    </div>
-                    <div class="transactions__date">8 days ago</div>
-                    <div class="transactions__value">$4 000</div>
-                  </div>
-
-                  <div class="transactions__row">
-                    <div
-                      class="transactions__type transactions__type--withdrawal"
-                    >
-                      1 withdrawal
-                    </div>
-                    <div class="transactions__date">17/10/2024</div>
-                    <div class="transactions__value">-$378</div>
-                  </div>
-                </div>
-
+                <div class="transactions" id="transactions"></div>
                 <!-- SUMMARY -->
                 <div class="summary">
                   <div class="summary__item">
@@ -73,27 +54,21 @@
                     <p
                       class="summary__value summary__value--in"
                       id="summary-value-in"
-                    >
-                      $0000
-                    </p>
+                    ></p>
                   </div>
                   <div class="summary__item">
                     <p class="summary__label">Out</p>
                     <p
                       class="summary__value summary__value--out"
                       id="summary-value-out"
-                    >
-                      $0000
-                    </p>
+                    ></p>
                   </div>
                   <div class="summary__item">
                     <p class="summary__label">Interest</p>
                     <p
                       class="summary__value summary__value--interest"
                       id="summary-value-interest"
-                    >
-                      $0000
-                    </p>
+                    ></p>
                   </div>
                 </div>
               </div>
@@ -109,7 +84,7 @@
                         type="number"
                         id="transfer-user-input"
                         class="input operation__input"
-                        required
+                        placeholder="Enter account number"
                       />
                     </div>
                     <div class="field">
@@ -118,6 +93,7 @@
                         type="number"
                         class="input operation__input"
                         id="transfer-amount-input"
+                        placeholder="Enter amount"
                       />
                     </div>
                     <button type="submit" class="btn btn-outline">
@@ -136,6 +112,7 @@
                         type="number"
                         class="input operation__input"
                         id="loan-amount-input"
+                        placeholder="Enter loan amount"
                       />
                     </div>
                     <button type="submit" class="btn btn-outline">
@@ -154,6 +131,7 @@
                         type="text"
                         class="input operation__input"
                         id="delete-account-input"
+                        placeholder="Enter user name"
                       />
                     </div>
                     <div class="field">
@@ -163,6 +141,7 @@
                         maxlength="6"
                         class="input operation__input"
                         id="delete-account-password-input"
+                        placeholder="Enter password"
                       />
                     </div>
                     <button
