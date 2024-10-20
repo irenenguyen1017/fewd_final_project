@@ -29,13 +29,13 @@ class StorageManager {
 }
 
 class BankAccountUser {
-  constructor({fullName, userName, transactions=[], interestRate, pin, accountNunber}) {
+  constructor({fullName, userName, transactions=[], interestRate, pin, accountNumber}) {
     this.fullName = fullName;
     this.userName = userName;
     this.transactions = transactions;
     this.interestRate = interestRate;
     this.pin = pin;
-    this.accountNunber = accountNunber || this.generateAccountNumber();
+    this.accountNumber = accountNumber || this.generateAccountNumber();
   }
 
   generateAccountNumber() {
@@ -125,6 +125,13 @@ class BankAccountManager {
     onSuccess();
   }
 
+  calculateBalance() {
+    const currentUser = this.getCurrentUser();
+    const transactions = currentUser.transactions;
+    const balance = transactions.reduce((total, transaction) => total + transaction.amount, 0);
+    return balance;
+  }
+
   generateInterestRate() {
     return (Math.random() * 3).toFixed(2);
   }
@@ -142,7 +149,9 @@ class BankAccountManager {
   }
   
   setCurrentUser(user) {
-    return this.storage.set(this.currentUserKey, user);
+    const { userName, accountNumber } = user;
+
+    return this.storage.set(this.currentUserKey, { userName, accountNumber});
   }
 
 }
@@ -167,9 +176,6 @@ function main() {
   const registerFullNameInput = document.getElementById('register-full-name-input');
   const registerUserInput = document.getElementById('register-user-input');
   const registerPasswordInput = document.getElementById('register-password-input');
-  
-  // Dashboard elements
-  const dashboardContent = document.getElementById('dashboard-content');
 
   // Balance elements
   const currentDate = document.getElementById('current-date');
@@ -213,26 +219,9 @@ function main() {
     }
   }
 
-  function registerUser(event) {
-    event.preventDefault();
+  initialize();
 
-    const data = {
-      fullName: registerFullNameInput.value,
-      userName: registerUserInput.value,
-      pin: registerPasswordInput.value
-    };
-
-    bankAccountManager.register({
-      data,
-      onSuccess: () => {
-        window.location.href = 'index.html';
-      },
-      onError: (message) => {
-        alert(message);
-      }
-    });
-  }
-
+  // Signin page
   function signIn(event) {
     event.preventDefault();
 
@@ -252,6 +241,36 @@ function main() {
     })
   }
 
+  if(signInForm) {
+    signInForm.addEventListener('submit', signIn);
+  }
+
+  // Register page
+  function registerUser(event) {
+    event.preventDefault();
+
+    const data = {
+      fullName: registerFullNameInput.value,
+      userName: registerUserInput.value,
+      pin: registerPasswordInput.value
+    };
+
+    bankAccountManager.register({
+      data,
+      onSuccess: () => {
+        window.location.href = 'index.html';
+      },
+      onError: (message) => {
+        alert(message);
+      }
+    });
+  }
+  
+  if (registerForm) {
+    registerForm.addEventListener('submit', registerUser);
+  }
+
+  // Dashboard page
   function signOut(event) {
     event.preventDefault();
 
@@ -265,19 +284,37 @@ function main() {
     });
   }
 
-  initialize();
-
-  if (registerForm) {
-    registerForm.addEventListener('submit', registerUser);
-  }
-
   if(signOutButton) {
     signOutButton.addEventListener('click', signOut);
   }
 
-  if(signInForm) {
-    signInForm.addEventListener('submit', signIn);
+  function displayBalance() {   
   }
+
+  // Utils  
+  function formatDate (date) {
+    const day = `${date.getDate()}`.padStart(2, '0');
+    const month = `${date.getMonth() + 1}`.padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+  
+  function formatDatePass (date) {
+    const calcDaysPassed = (date1, date2) =>
+      Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+  
+    const daysPassed = calcDaysPassed(new Date(), date);
+    if (daysPassed === 0) return "Today";
+    if (daysPassed === 1) return "Yesterday";
+    if (daysPassed <= 7) return `${daysPassed} days ago`;
+  
+    return formatDate(date);
+  };
+
+  
+
+  
+
 }
 
 main();
