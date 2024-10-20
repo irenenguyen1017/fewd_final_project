@@ -35,7 +35,7 @@
   --color-secondary-dark: #ffbb00;
   --color-tertiary-dark: #fd424b;
 
-  --color-primary-light: #80d490;
+  --color-primary-light: #94e0a2;
   --color-secondary-light: #ffdc33;
   --color-tertiary-light: #ff7b83;
 
@@ -48,9 +48,9 @@
   --color-tertiary-accent: #d93841;
 
   /* Gradients */
-  --gradient-primary: linear-gradient(to top left, #39b385, #9be15d);
-  --gradient-secondary: linear-gradient(to top left, #ffb003, #ffcb03);
-  --gradient-tertiary: linear-gradient(to top right, #ff5a70, #ff8a94);
+  --gradient-primary: linear-gradient(to top left, var(--color-primary), var(--color-primary-light));
+  --gradient-secondary: linear-gradient(to top left, var(--color-secondary), var(--color-secondary-light));
+  --gradient-tertiary: linear-gradient(to top right, var(--color-tertiary), var(--color-tertiary-light));
 
   /* Spacing */
   --spacing-2xs: 4px;
@@ -185,7 +185,7 @@ html, body {
   padding-top: var(--spacing-lg);
   height: 200px;
   flex-grow: 0;
-  padding-top: var(--spacing-xl);
+  padding-top: var(--spacing-3xl);
 }
 
 .footer__wrapper {
@@ -198,6 +198,17 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
+}
+
+.form__title {
+  font-size: var(--font-lg);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.form__message {
+  margin-top: var(--spacing-lg);
 }
 
 .field {
@@ -213,7 +224,7 @@ html, body {
 
 .input {
   border-color: transparent;
-  background-color: rgba(255, 255, 255, 0.4);  
+  background-color: rgba(255, 255, 255, 0.5);  
   padding-left: var(--spacing-md);
   padding-right: var(--spacing-md);
   height: 48px;
@@ -454,16 +465,16 @@ html, body {
   }
 }
 
+.operation__title {
+  font-size: var(--font-lg);
+  font-weight: var(--font-weight-medium);
+}
+
 .action-form {
   padding: var(--spacing-xl);
   background-color: var(--color-primary-light);
   border-radius: 16px;
   font-size: var(--font-md);
-}
-
-.form__message {
-  margin-top: var(--spacing-lg);
-  color: var(--color-text-primary);
 }
 
 /* OPERATIONS */
@@ -477,14 +488,14 @@ html, body {
 }
 
 .operation--transfer {
-  background-color: var(--color-primary-light);
+  background-image: var(--gradient-primary)
 }
 
 .operation--loan {
-  background-color: var(--color-secondary-light);
+  background-image: var(--gradient-secondary)
 }
 
 .operation--close {
-  background-color: var(--color-tertiary-light);
+  background-image: var(--gradient-tertiary)
 }
 
