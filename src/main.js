@@ -1,42 +1,42 @@
 const defaultUsers = [
   {
     fullName: "Jessica Davis",
-    userName: "test1",
+    userName: "user1",
     accountNumber: 123456,
     transactions: [
-      { type: "deposit", amount: 5000, date: "2024-10-01T13:15:33.035Z" },
-      { type: "withdrawal", amount: 1500, date: "2024-10-05T09:48:16.867Z" },
-      { type: "deposit", amount: 1000, date: "2024-10-07T14:11:59.604Z" },
-      { type: "loan", amount: 8000, date: "2024-10-10T17:01:17.194Z" },
-      { type: "deposit", amount: 3000, date: "2024-10-12T23:36:17.929Z" },
+      { type: "deposit", amount: 500, date: "2024-10-01T13:15:33.035Z" },
+      { type: "withdrawal", amount: 150, date: "2024-10-05T09:48:16.867Z" },
+      { type: "deposit", amount: 100, date: "2024-10-07T14:11:59.604Z" },
+      { type: "loan", amount: 800, date: "2024-10-10T17:01:17.194Z" },
+      { type: "deposit", amount: 300, date: "2024-10-12T23:36:17.929Z" },
     ],
     interestRate: 1.5,
     pin: 1111,
   },
   {
     fullName: "Michael Johnson",
-    userName: "test2",
+    userName: "user2",
     accountNumber: 234567,
     transactions: [
-      { type: "deposit", amount: 7000, date: "2024-09-25T11:24:33.035Z" },
-      { type: "withdrawal", amount: 2000, date: "2024-09-28T14:48:16.867Z" },
+      { type: "deposit", amount: 700, date: "2024-09-25T11:24:33.035Z" },
+      { type: "withdrawal", amount: 200, date: "2024-09-28T14:48:16.867Z" },
       { type: "deposit", amount: 500, date: "2024-09-30T10:11:59.604Z" },
-      { type: "loan", amount: 6000, date: "2024-10-02T09:01:17.194Z" },
-      { type: "deposit", amount: 4000, date: "2024-10-03T12:36:17.929Z" },
+      { type: "loan", amount: 600, date: "2024-10-02T09:01:17.194Z" },
+      { type: "deposit", amount: 400, date: "2024-10-03T12:36:17.929Z" },
     ],
     interestRate: 2.0,
     pin: 2222,
   },
   {
     fullName: "Emily Clark",
-    userName: "test3",
+    userName: "user3",
     accountNumber: 345678,
     transactions: [
-      { type: "deposit", amount: 10000, date: "2024-10-03T13:55:33.035Z" },
-      { type: "withdrawal", amount: 3000, date: "2024-10-06T16:35:16.867Z" },
-      { type: "deposit", amount: 2000, date: "2024-10-09T18:20:59.604Z" },
-      { type: "loan", amount: 12000, date: "2024-10-10T21:01:17.194Z" },
-      { type: "deposit", amount: 5000, date: "2024-10-11T23:10:17.929Z" },
+      { type: "deposit", amount: 1000, date: "2024-10-03T13:55:33.035Z" },
+      { type: "withdrawal", amount: 300, date: "2024-10-06T16:35:16.867Z" },
+      { type: "deposit", amount: 200, date: "2024-10-09T18:20:59.604Z" },
+      { type: "loan", amount: 1200, date: "2024-10-10T21:01:17.194Z" },
+      { type: "deposit", amount: 500, date: "2024-10-11T23:10:17.929Z" },
     ],
     interestRate: 1.8,
     pin: 3333,
@@ -59,17 +59,17 @@ class StorageManager {
   set(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
   }
-
-  // Remove an item from localStorage
-  remove(key) {
-    localStorage.removeItem(key);
-  }
-
+  
   // Get an item from localStorage
   get(key) {
     const value = localStorage.getItem(key);
 
     return value ? JSON.parse(value) : null;
+  }
+
+  // Remove an item from localStorage
+  remove(key) {
+    localStorage.removeItem(key);
   }
 }
 
@@ -135,6 +135,8 @@ class BankAccountManager {
   login({data, onSuccess, onError}) {
     const {userName, pin} = data;
     const users = this.getUsers();
+
+    console.log({ userName, pin, users });
 
     const user = users.find(user => user.userName === userName && user.pin === pin);
 
@@ -203,8 +205,12 @@ class BankAccountManager {
 
   transferMoney({data, onSuccess, onError })  {
     const { toAccountNumber, amount } = data;
+
+    console.log({ toAccountNumber})
     const currentUser = this.getCurrentUser();
     const recipient = this.findUserByAccountNumber(toAccountNumber);
+
+    console.log({ recipient, currentUser });
   
     if(!recipient) {
       onError(`Recipient account ${toAccountNumber} not found`);
@@ -224,9 +230,11 @@ class BankAccountManager {
     }
 
     currentUser.transactions.push({ type: 'withdrawal', amount, date: new Date().toISOString() });
+
     recipient.transactions.push({ type: 'deposit', amount, date: new Date().toISOString() });
 
     this.updateUserData(currentUser);
+    
     this.updateUserData(recipient);
     
     onSuccess();
@@ -268,15 +276,12 @@ class BankAccountManager {
 
   updateUserData(user) {
     const users = this.getUsers();
-    const index = users.findIndex(u => u.userName === user.userName);
 
-    if (index === -1) {
-      return;
-    }
+    const updatedUsers = users.map(existingUser => 
+      existingUser.userName === user.userName ? user : existingUser
+    );
 
-    users[index] = user;
-
-    this.setUsers(users);
+    this.setUsers(updatedUsers);
   }
 
   findUserByAccountNumber(accountNumber) {
@@ -288,8 +293,6 @@ class BankAccountManager {
 function main() {
   // Page elements
   const dashboardPage = document.getElementById('dashboard-page');
-  const loginPage = document.getElementById('login-page');
-  const registerPage = document.getElementById('register-page');
 
   // Sign in elements
   const signInForm = document.getElementById('sign-in-form');
