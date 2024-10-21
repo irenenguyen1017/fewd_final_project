@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bankist App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body id="dashboard-page">
+    <div class="page-container">
+      <header class="header">
+        <div class="page-block">
+          <div class="content-block header__wrapper">
+            <img src="../images/logo.svg" alt="logo" class="logo" />
+            <button id="sign-out-button" class="btn btn-logout">
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </header>
+      <main class="main">
+        <div class="page-block">
+          <div class="content-block" id="dashboard-content">
+            <div class="dashboard">
+              <div class="balance">
+                <div>
+                  <p class="balance__label">Current balance</p>
+                  <p class="balance__date">
+                    As of <span class="date" id="current-date"></span>
+                  </p>
+                </div>
+                <p class="balance__value" id="current-balance"></p>
+              </div>
+
+              <div class="transactions-history">
+                <div class="transactions" id="transactions"></div>
+                <!-- SUMMARY -->
+                <div class="summary">
+                  <div class="summary__item">
+                    <p class="summary__label">In</p>
+                    <p
+                      class="summary__value summary__value--in"
+                      id="summary-value-in"
+                    ></p>
+                  </div>
+                  <div class="summary__item">
+                    <p class="summary__label">Out</p>
+                    <p
+                      class="summary__value summary__value--out"
+                      id="summary-value-out"
+                    ></p>
+                  </div>
+                  <div class="summary__item">
+                    <p class="summary__label">Interest</p>
+                    <p
+                      class="summary__value summary__value--interest"
+                      id="summary-value-interest"
+                    ></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="operation-container">
+                <!-- OPERATION: TRANSFERS -->
+                <div class="operation operation--transfer">
+                  <h2 class="operation__title">Transfer money</h2>
+                  <form class="form" id="transfer-form">
+                    <div class="field">
+                      <label class="field__label">Transfer to</label>
+                      <input
+                        type="number"
+                        id="transfer-user-input"
+                        class="input operation__input"
+                        placeholder="Enter account number"
+                      />
+                    </div>
+                    <div class="field">
+                      <label class="field__label">Amount</label>
+                      <input
+                        type="number"
+                        class="input operation__input"
+                        id="transfer-amount-input"
+                        placeholder="Enter amount"
+                      />
+                    </div>
+                    <button type="submit" class="btn btn-outline">
+                      Process
+                    </button>
+                  </form>
+                </div>
+
+                <!-- OPERATION: LOAN -->
+                <div class="operation operation--loan">
+                  <h2 class="operation__title">Request loan</h2>
+                  <form class="form" id="loan-form">
+                    <div class="field">
+                      <label class="field__label">Amount</label>
+                      <input
+                        type="number"
+                        class="input operation__input"
+                        id="loan-amount-input"
+                        placeholder="Enter loan amount"
+                      />
+                    </div>
+                    <button type="submit" class="btn btn-outline">
+                      Request
+                    </button>
+                  </form>
+                </div>
+
+                <!-- OPERATION: CLOSE -->
+                <div class="operation operation--close">
+                  <h2 class="operation__title">Close account</h2>
+                  <form class="form" id="delete-form">
+                    <div class="field">
+                      <label class="field__label">Confirm user name</label>
+                      <input
+                        type="text"
+                        class="input operation__input"
+                        id="delete-account-input"
+                        placeholder="Enter user name"
+                      />
+                    </div>
+                    <div class="field">
+                      <label class="field__label">Confirm Password</label>
+                      <input
+                        type="password"
+                        maxlength="6"
+                        class="input operation__input"
+                        id="delete-account-password-input"
+                        placeholder="Enter password"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      class="btn btn-outline operation__btn"
+                    >
+                      Delete Account
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer class="footer">
+        <div class="page-block">
+          <div class="content-block footer__wrapper">
+            <p>&copy; 2024 Bankist. All Rights Reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="main.js" defer></script>
+  </body>
+</html>
