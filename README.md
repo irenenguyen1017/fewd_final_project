@@ -45,9 +45,19 @@ The app consists of three main pages:
 
 - **Data Storage**: Implements localStorage to handle user data and persist session information. The app simulates a backend by storing user accounts, transaction histories, and balances locally.
 
-- Code Organization:
-  - Business Logic: Responsible for core functionalities such as user authentication, handling bank operations (e.g., transfers, loans), updating balances, and managing transaction histories.
-  - UI Interaction: Dynamically updates the DOM to reflect user actions in real-time (e.g., balance updates, transaction lists, login/logout states).
+- **Code Organization**:
+  - **Business Logic**: Responsible for core functionalities such as user authentication, handling bank operations (e.g., transfers, loans), updating balances, and managing transaction histories.
+  - **UI Interaction**: Dynamically updates the DOM to reflect user actions in real-time (e.g., balance updates, transaction lists, login/logout states).
+
+### Test Accounts
+
+Here are some test accounts you can use to log in and explore the app:
+
+| Username    | PIN  | Account Number |
+|-------------|------|----------------|
+| user1       | 1111 | 123456         |
+| user2       | 2222 | 234567         |
+| user3       | 3333 | 345678         |
 
 #### Get started
 
