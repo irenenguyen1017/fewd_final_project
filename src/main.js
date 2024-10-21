@@ -315,6 +315,9 @@ function main() {
   // Transactions elements
   const transactions = document.getElementById('transactions');
 
+  // Account number element
+  const accountNumber = document.getElementById('account-number');
+
   // Summary elements
   const summaryValueIn = document.getElementById('summary-value-in');
   const summaryValueOut = document.getElementById('summary-value-out');
@@ -460,6 +463,11 @@ function main() {
     displayBalance();
     displayTransactions();
     displayTransactionsSummary();
+    displayAccountNumber();
+  }
+
+  function displayAccountNumber() {
+    accountNumber.textContent = bankAccountManager.getCurrentUser().accountNumber;
   }
 
   function displayBalance() {   
