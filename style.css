@@ -20,11 +20,11 @@
   --color-primary: #5ec576;
   --color-secondary: #ffcb03;
   --color-tertiary: #ff585f;
-  
+
   --color-primary-light: #94e0a2;
   --color-secondary-light: #ffdc33;
   --color-tertiary-light: #ff7b83;
-  
+
   --color-primary-dark: #4bbb7d;
 
   --color-primary-accent: #2e944c;
@@ -32,9 +32,21 @@
   --color-tertiary-accent: #d93841;
 
   /* Gradients */
-  --gradient-primary: linear-gradient(to top left, var(--color-primary), var(--color-primary-light));
-  --gradient-secondary: linear-gradient(to top left, var(--color-secondary), var(--color-secondary-light));
-  --gradient-tertiary: linear-gradient(to top right, var(--color-tertiary), var(--color-tertiary-light));
+  --gradient-primary: linear-gradient(
+    to top left,
+    var(--color-primary),
+    var(--color-primary-light)
+  );
+  --gradient-secondary: linear-gradient(
+    to top left,
+    var(--color-secondary),
+    var(--color-secondary-light)
+  );
+  --gradient-tertiary: linear-gradient(
+    to top right,
+    var(--color-tertiary),
+    var(--color-tertiary-light)
+  );
 
   /* Spacing */
   --spacing-2xs: 4px;
@@ -78,7 +90,8 @@ body {
   background-color: var(--color-bg-primary);
 }
 
-html, body {
+html,
+body {
   min-height: 100vh;
 }
 
@@ -93,7 +106,6 @@ html, body {
   min-height: 100vh;
   width: 100%;
 }
-
 
 .page-block {
   padding-left: var(--spacing-md);
@@ -143,7 +155,6 @@ html, body {
 .logo {
   width: 50px;
   height: 50px;
-
 }
 
 .main {
@@ -151,9 +162,8 @@ html, body {
   padding-top: var(--spacing-3xl);
 }
 
-
 @media (min-width: 1024px) {
-  .main{
+  .main {
     padding-top: var(--spacing-4xl);
   }
 }
@@ -201,7 +211,7 @@ html, body {
 
 .input {
   border-color: transparent;
-  background-color: rgba(255, 255, 255, 0.5);  
+  background-color: rgba(255, 255, 255, 0.5);
   padding-left: var(--spacing-md);
   padding-right: var(--spacing-md);
   height: 48px;
@@ -288,6 +298,19 @@ html, body {
   }
 }
 
+.account-number {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+@media (min-width: 1024px) {
+  .account-number {
+    font-size: var(--font-md);
+  }
+}
+
 .balance__value {
   font-size: var(--font-lg);
   font-weight: var(--font-weight-medium);
@@ -345,7 +368,7 @@ html, body {
 }
 
 @media (min-width: 1024px) {
-  .transactions__type{
+  .transactions__type {
     font-size: var(--font-md);
     padding: var(--spacing-2xs) var(--spacing-sm);
   }
@@ -365,7 +388,7 @@ html, body {
 }
 
 .transactions__type--deposit {
-  background-color:  var(--color-bg-primary-accent);
+  background-color: var(--color-bg-primary-accent);
 }
 
 .transactions__type--loan {
@@ -462,18 +485,18 @@ html, body {
   flex-direction: column;
   gap: var(--spacing-md);
   border-radius: 16px;
-  padding: var(--spacing-lg);;
+  padding: var(--spacing-lg);
   color: var(--color-text-primary);
 }
 
 .operation--transfer {
-  background-image: var(--gradient-primary)
+  background-image: var(--gradient-primary);
 }
 
 .operation--loan {
-  background-image: var(--gradient-secondary)
+  background-image: var(--gradient-secondary);
 }
 
 .operation--close {
-  background-image: var(--gradient-tertiary)
+  background-image: var(--gradient-tertiary);
 }
