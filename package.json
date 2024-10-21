@@ -5,13 +5,15 @@
   "main": "main.js",
   "scripts": {
     "start": "live-server ./src",
-    "deploy": "gh-pages -d ./src"
+    "deploy": "gh-pages -d ./src",
+    "format": "prettier --write ."
   },
   "keywords": [],
   "author": "Binh Nguyen",
   "license": "ISC",
   "devDependencies": {
     "gh-pages": "^6.2.0",
-    "live-server": "^1.2.2"
+    "live-server": "^1.2.2",
+    "prettier": "^3.3.3"
   }
 }

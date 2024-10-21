@@ -53,11 +53,11 @@ The app consists of three main pages:
 
 Here are some test accounts you can use to log in and explore the app:
 
-| Username    | PIN  | Account Number |
-|-------------|------|----------------|
-| user1       | 1111 | 123456         |
-| user2       | 2222 | 234567         |
-| user3       | 3333 | 345678         |
+| Username | PIN  | Account Number |
+| -------- | ---- | -------------- |
+| user1    | 1111 | 123456         |
+| user2    | 2222 | 234567         |
+| user3    | 3333 | 345678         |
 
 #### Get started
 
@@ -72,5 +72,3 @@ git clone git@github.com:irenenguyen1017/fewd_final_project.git
 ```
 npm start
 ```
-
-
