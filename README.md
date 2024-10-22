@@ -63,12 +63,12 @@ Here are some test accounts you can use to log in and explore the app:
 
 > Clone Repository
 
-```
+```bash
 git clone git@github.com:irenenguyen1017/fewd_final_project.git
 ```
 
 > Start Local Server
 
-```
+```bash
 npm start
 ```
