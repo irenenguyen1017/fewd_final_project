@@ -755,8 +755,6 @@ function main() {
 
     const daysPassed = calcDaysPassed(new Date(), date);
 
-    console.log(daysPassed);
-
     if (daysPassed === 0) return 'Today';
     if (daysPassed === 1) return 'Yesterday';
     if (daysPassed <= 7) return `${daysPassed} days ago`;
